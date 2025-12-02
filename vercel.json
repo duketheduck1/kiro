@@ -4,23 +4,36 @@
     {
       "src": "src/backend/server.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "src/frontend/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "src/backend/server.js"
+      "dest": "/src/backend/server.js"
     },
     {
       "src": "/js/(.*)",
       "dest": "/src/frontend/$1"
     },
     {
+      "src": "/",
+      "dest": "/public/reborn.html"
+    },
+    {
+      "src": "/(.*\\.(html|css|js|png|jpg|jpeg|gif|svg|ico))",
+      "dest": "/public/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/public/$1"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
