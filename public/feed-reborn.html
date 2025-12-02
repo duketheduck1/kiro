@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clippy Reborn - News Feed</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #e0e0e0;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px 40px;
+      box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .search-input {
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      width: 300px;
+      font-size: 14px;
+    }
+
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+
+    .feed-header {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .feed-title {
+      font-size: 32px;
+      color: #667eea;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+    }
+
+    .article-count {
+      color: #b0b0b0;
+      font-size: 16px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 60px;
+      color: #667eea;
+    }
+
+    .spinner {
+      border: 4px solid rgba(102, 126, 234, 0.2);
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Windows-style News Cards Grid */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .news-card {
+      background: #1a1a2e;
+      border: 2px solid #667eea;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .news-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
+      border-color: #8b9aff;
+    }
+
+    .news-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+
+    .news-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .news-content {
+      padding: 20px;
+    }
+
+    .news-meta {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: #b0b0b0;
+    }
+
+    .news-source {
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    .news-category {
+      background: rgba(102, 126, 234, 0.2);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: #8b9aff;
+    }
+
+    .news-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 12px;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-description {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.6;
+      margin-bottom: 15px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 15px;
+      border-top: 1px solid rgba(102, 126, 234, 0.2);
+    }
+
+    .news-date {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .news-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 80px 20px;
+      color: #667eea;
+    }
+
+    .no-results-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .search-input {
+        width: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-content">
+      <h1>📰 Clippy Reborn News</h1>
+      <div class="search-box">
+        <input type="text" class="search-input" id="search-input" placeholder="Search articles...">
+        <a href="/reborn.html" class="nav-link">🏠 Home</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="feed-header">
+      <h2 class="feed-title" id="feed-title">Latest News</h2>
+      <p class="article-count" id="article-count">Loading articles...</p>
+    </div>
+
+    <div id="articles-container">
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Loading news from top sources...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load Clippy components -->
+  <script src="/js/api-client.js"></script>
+  <script src="/js/clippy-widget.js"></script>
+  <script src="/js/highlight-detector.js"></script>
+  <script src="/js/interaction-menu.js"></script>
+  <script src="/js/clippy-tips.js"></script>
+  <script src="/js/clippy-app.js"></script>
+
+  <script>
+    let allArticles = [];
+    let clippy;
+
+    // Initialize Clippy
+    document.addEventListener('DOMContentLoaded', () => {
+      clippy = new ClippyApp({
+        apiBaseUrl: 'http://localhost:3000/api',
+        position: 'bottom-right',
+        theme: 'light'
+      });
+      window.clippy = clippy;
+    });
+
+    // Load articles
+    window.addEventListener('load', async () => {
+      await loadArticles();
+    });
+
+    async function loadArticles() {
+      try {
+        const response = await fetch('http://localhost:3000/api/feed');
+        const data = await response.json();
+        
+        if (data.success) {
+          allArticles = data.data.articles;
+          displayArticles(allArticles);
+          updateArticleCount(allArticles.length);
+        }
+      } catch (error) {
+        console.error('Error loading articles:', error);
+        document.getElementById('articles-container').innerHTML = `
+          <div class="no-results">
+            <div class="no-results-icon">⚠️</div>
+            <h3>Failed to load articles</h3>
+            <p>Please check your connection and try again.</p>
+          </div>
+        `;
+      }
+    }
+
+    function displayArticles(articles) {
+      const container = document.getElementById('articles-container');
+      
+      if (articles.length === 0) {
+        container.innerHTML = `
+          <div class="no-results">
+            <div class="no-results-icon">📭</div>
+            <h3>No articles found</h3>
+            <p>Try adjusting your search query.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = '<div class="news-grid">' + articles.map(article => `
+        <div class="news-card" onclick="openArticle('${article.link}')">
+          <div class="news-image">
+            ${article.image ? `<img src="${article.image}" alt="${article.title}" onerror="this.parentElement.innerHTML='📰'">` : '📰'}
+          </div>
+          <div class="news-content">
+            <div class="news-meta">
+              <span class="news-source">📡 ${article.source}</span>
+              <span class="news-category">${article.category}</span>
+              <span class="news-date">${formatDate(article.pubDate)}</span>
+            </div>
+            <h3 class="news-title">${article.title}</h3>
+            <p class="news-description">${article.description}</p>
+            <div class="news-footer">
+              <span class="news-date">By ${article.author}</span>
+              <div class="news-actions">
+                <button class="action-btn" onclick="event.stopPropagation(); summarizeArticle('${article.id}')">
+                  📝 Summary
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('') + '</div>';
+    }
+
+    function updateArticleCount(count) {
+      document.getElementById('article-count').textContent = `${count} articles from top sources`;
+    }
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      const now = new Date();
+      const diff = now - date;
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      
+      if (hours < 1) return 'Just now';
+      if (hours < 24) return `${hours}h ago`;
+      if (hours < 48) return 'Yesterday';
+      return date.toLocaleDateString();
+    }
+
+    function openArticle(url) {
+      window.open(url, '_blank');
+    }
+
+    async function summarizeArticle(articleId) {
+      const article = allArticles.find(a => a.id === articleId);
+      if (!article) return;
+
+      try {
+        clippy.widget.showLoading();
+        const response = await clippy.apiClient.summarize(article.content || article.description);
+        clippy.widget.displayResponse({
+          ...response.data,
+          content: `📰 ${article.title}\n\n${response.data.content}\n\n🔗 Source: ${article.source}`
+        }, 'summarize');
+      } catch (error) {
+        clippy.widget.displayError(error.message);
+      }
+    }
+
+    // Search
+    document.getElementById('search-input').addEventListener('keypress', async (e) => {
+      if (e.key === 'Enter') {
+        const query = e.target.value.trim();
+        if (!query) {
+          displayArticles(allArticles);
+          document.getElementById('feed-title').textContent = 'Latest News';
+          return;
+        }
+
+        try {
+          const response = await fetch(`http://localhost:3000/api/feed/search?q=${encodeURIComponent(query)}`);
+          const data = await response.json();
+          
+          if (data.success) {
+            displayArticles(data.data.articles);
+            updateArticleCount(data.data.count);
+            document.getElementById('feed-title').textContent = `Search: "${query}"`;
+          }
+        } catch (error) {
+          console.error('Error searching:', error);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

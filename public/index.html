@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clippy Reader AI - Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      padding: 40px 20px;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: #667eea;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+      font-size: 36px;
+    }
+
+    .subtitle {
+      color: #b0b0b0;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .status {
+      background: rgba(102, 126, 234, 0.2);
+      border: 2px solid #667eea;
+      color: #e0e0e0;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .status a {
+      color: #8b9aff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .status a:hover {
+      color: #a8b5ff;
+    }
+
+    .instructions {
+      background: rgba(102, 126, 234, 0.15);
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      border: 2px solid rgba(102, 126, 234, 0.4);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+    }
+
+    .instructions h2 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: #667eea;
+      text-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+    }
+
+    .instructions ol {
+      margin: 15px 0;
+      padding-left: 25px;
+    }
+
+    .instructions li {
+      margin: 12px 0;
+      color: #c0c0c0;
+    }
+
+    .instructions ul {
+      margin: 8px 0;
+      padding-left: 20px;
+    }
+
+    .instructions ul li {
+      margin: 6px 0;
+    }
+
+    .instructions p {
+      margin: 12px 0;
+      color: #b0b0b0;
+    }
+
+    .article {
+      background: rgba(26, 26, 46, 0.8);
+      padding: 40px;
+      border-radius: 12px;
+      border: 2px solid rgba(102, 126, 234, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .article h2 {
+      color: #667eea;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px rgba(102, 126, 234, 0.4);
+    }
+
+    .article p {
+      margin: 15px 0;
+      color: #d0d0d0;
+      line-height: 1.8;
+    }
+
+    code {
+      background: rgba(102, 126, 234, 0.2);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      color: #8b9aff;
+    }
+
+    .emoji {
+      font-size: 20px;
+    }
+
+    strong {
+      color: #e8e8e8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📎 Clippy Reader AI Demo</h1>
+    <p class="subtitle">Your friendly AI reading assistant is ready!</p>
+
+    <div class="status">
+      <strong>✅ Server Status:</strong> Connected to http://localhost:3000
+      <div style="margin-top: 10px;">
+        <a href="/editor.html">
+          ✍️ Try the Rich Text Editor →
+        </a>
+        <span style="margin: 0 10px;">|</span>
+        <a href="/reborn.html">
+          🏠 Back to Home
+        </a>
+      </div>
+    </div>
+
+    <div class="instructions">
+      <h2>🎯 How to Use Clippy</h2>
+      <ol>
+        <li><strong>Select any text</strong> in the article below (just highlight it with your mouse)</li>
+        <li><strong>A menu will pop up</strong> with these options:
+          <ul>
+            <li>📚 <strong>ELI5</strong> - Explain like you're 5 (super simple!)</li>
+            <li>📝 <strong>Summarize</strong> - Get the key points</li>
+            <li>📖 <strong>Define</strong> - Define technical terms</li>
+            <li>🌟 <strong>Example</strong> - Get real-world examples</li>
+            <li>💡 <strong>Explain</strong> - Plain language explanation</li>
+          </ul>
+        </li>
+        <li><strong>Click an option</strong> and watch the magic happen!</li>
+        <li><strong>See the result</strong> in the purple Clippy widget (bottom-right corner)</li>
+      </ol>
+      <p><strong>💡 Try this:</strong> Select "quantum entanglement" and click <strong>ELI5</strong> to see it explained like you're 5 years old!</p>
+    </div>
+
+    <div class="article">
+    <h2>Understanding Quantum Computing</h2>
+    
+    <p>
+      Quantum computing represents a paradigm shift in computational technology, leveraging the principles of quantum mechanics to process information in fundamentally different ways than classical computers. Unlike traditional bits that exist in states of either 0 or 1, quantum bits or "qubits" can exist in superposition, simultaneously representing multiple states.
+    </p>
+
+    <p>
+      The phenomenon of quantum entanglement allows qubits to be correlated with each other in ways that have no classical analog. When qubits become entangled, the state of one qubit instantaneously influences the state of another, regardless of the distance separating them. This property enables quantum computers to perform certain calculations exponentially faster than their classical counterparts.
+    </p>
+
+    <h2>Applications and Implications</h2>
+
+    <p>
+      Quantum computers excel at solving optimization problems, simulating molecular interactions for drug discovery, and breaking certain types of encryption. The cryptographic implications are particularly significant, as quantum algorithms like Shor's algorithm could theoretically factor large numbers efficiently, potentially compromising current public-key cryptography systems.
+    </p>
+
+    <p>
+      However, quantum computing faces substantial challenges. Qubits are extremely fragile and susceptible to decoherence, where environmental interference causes them to lose their quantum properties. Maintaining quantum coherence requires operating at temperatures near absolute zero and implementing sophisticated error correction protocols.
+    </p>
+
+    <h2>The Future of Computing</h2>
+
+    <p>
+      As quantum technology matures, we anticipate a hybrid computing paradigm where quantum processors handle specific tasks while classical computers manage others. This synergy could revolutionize fields ranging from artificial intelligence and machine learning to materials science and financial modeling.
+    </p>
+
+    <p>
+      The race to achieve "quantum supremacy" - the point where quantum computers can solve problems impossible for classical computers - has intensified among tech giants and research institutions worldwide. While significant hurdles remain, the potential impact of quantum computing on society, economy, and scientific discovery is profound and far-reaching.
+    </p>
+
+    <h2>Quantum Algorithms</h2>
+
+    <p>
+      Quantum algorithms exploit quantum mechanical phenomena to solve computational problems more efficiently than classical algorithms. Grover's algorithm, for instance, provides quadratic speedup for unstructured search problems, while quantum annealing shows promise for optimization tasks in logistics, finance, and machine learning applications.
+    </p>
+    </div>
+  </div>
+
+  <!-- Load all Clippy components from the server -->
+  <script src="/js/api-client.js"></script>
+  <script src="/js/clippy-widget.js"></script>
+  <script src="/js/highlight-detector.js"></script>
+  <script src="/js/interaction-menu.js"></script>
+  <script src="/js/clippy-tips.js"></script>
+  <script src="/js/clippy-app.js"></script>
+
+  <!-- Initialize Clippy -->
+  <script>
+    // Initialize Clippy when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('🚀 Initializing Clippy Reader AI...');
+      
+      const clippy = new ClippyApp({
+        apiBaseUrl: 'http://localhost:3000/api',
+        position: 'bottom-right',
+        theme: 'light'
+      });
+
+      console.log('✅ Clippy is ready! Select some text to try it out.');
+      
+      // Make it globally accessible for debugging
+      window.clippy = clippy;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clippy AI - Your Friendly Reading & Writing Assistant</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    body::before {
+      content: '🎃👻🦇🕷️🎃👻🦇🕷️🎃👻🦇🕷️';
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 24px;
+      opacity: 0.3;
+      animation: float 20s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .container {
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    .ascii-logo {
+      text-align: center;
+      margin-bottom: 30px;
+      animation: glow 3s ease-in-out infinite;
+    }
+
+    .ascii-logo pre {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      line-height: 1.2;
+      color: #667eea;
+      text-shadow: 0 0 20px rgba(102, 126, 234, 0.8), 0 0 40px rgba(118, 75, 162, 0.6);
+      margin: 0;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    @keyframes glow {
+      0%, 100% { 
+        filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.6));
+      }
+      50% { 
+        filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.9)) drop-shadow(0 0 30px rgba(118, 75, 162, 0.7));
+      }
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 50px;
+    }
+
+    .tagline {
+      font-size: 24px;
+      font-weight: 300;
+      margin-bottom: 20px;
+      opacity: 0.95;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .modes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 1200px) {
+      .modes {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .mode-card {
+      background: #1a1a2e;
+      border: 2px solid #ff6b35;
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      transition: all 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: #e0e0e0;
+      display: block;
+      box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3), 0 0 30px rgba(138, 43, 226, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mode-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+      animation: shimmer 4s linear infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .mode-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 12px 40px rgba(255, 107, 53, 0.5), 0 0 50px rgba(138, 43, 226, 0.4);
+      border-color: #ff8555;
+    }
+
+    .mode-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+    }
+
+    .mode-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #ff6b35;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+      position: relative;
+      z-index: 1;
+    }
+
+    .mode-description {
+      font-size: 16px;
+      color: #b0b0b0;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .mode-features {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 25px;
+    }
+
+    .mode-features li {
+      padding: 8px 0;
+      color: #c0c0c0;
+      font-size: 14px;
+      padding-left: 25px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .mode-features li::before {
+      content: '🎃';
+      position: absolute;
+      left: 0;
+      font-size: 14px;
+    }
+
+    .mode-button {
+      background: linear-gradient(135deg, #ff6b35 0%, #8b2bca 100%);
+      color: white;
+      border: 2px solid rgba(255, 107, 53, 0.5);
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+    }
+
+    .mode-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6), 0 0 30px rgba(138, 43, 226, 0.4);
+      background: linear-gradient(135deg, #ff8555 0%, #a040e0 100%);
+    }
+
+    .footer {
+      text-align: center;
+      color: white;
+      opacity: 0.9;
+    }
+
+    .footer p {
+      margin: 10px 0;
+      font-size: 14px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 36px;
+      }
+
+      .header p {
+        font-size: 16px;
+      }
+
+      .modes {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="ascii-logo">
+      <pre>
+ ██████╗██╗     ██╗██████╗ ██████╗ ██╗   ██╗
+██╔════╝██║     ██║██╔══██╗██╔══██╗╚██╗ ██╔╝
+██║     ██║     ██║██████╔╝██████╔╝ ╚████╔╝ 
+██║     ██║     ██║██╔═══╝ ██╔═══╝   ╚██╔╝  
+╚██████╗███████╗██║██║     ██║        ██║   
+ ╚═════╝╚══════╝╚═╝╚═╝     ╚═╝        ╚═╝   
+                                             
+██████╗ ███████╗██████╗  ██████╗ ██████╗ ███╗   ██╗
+██╔══██╗██╔════╝██╔══██╗██╔═══██╗██╔══██╗████╗  ██║
+██████╔╝█████╗  ██████╔╝██║   ██║██████╔╝██╔██╗ ██║
+██╔══██╗██╔══╝  ██╔══██╗██║   ██║██╔══██╗██║╚██╗██║
+██║  ██║███████╗██████╔╝╚██████╔╝██║  ██║██║ ╚████║
+╚═╝  ╚═╝╚══════╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝
+      </pre>
+    </div>
+    <div class="header">
+      <p class="tagline">Your AI-Powered Reading & Writing Assistant</p>
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        Server Online
+      </div>
+    </div>
+
+    <div class="modes">
+      <a href="/feed.html" class="mode-card">
+        <div class="mode-icon">📰</div>
+        <div class="mode-title">News Feed</div>
+        <div class="mode-description">
+          Browse curated news from top sources. Get AI-powered summaries, analysis, and insights with citations.
+        </div>
+        <ul class="mode-features">
+          <li>Live RSS feeds</li>
+          <li>Multiple sources</li>
+          <li>AI summaries</li>
+          <li>Article analysis</li>
+          <li>Source citations</li>
+        </ul>
+        <button class="mode-button">Browse News</button>
+      </a>
+
+      <a href="/index.html" class="mode-card">
+        <div class="mode-icon">📖</div>
+        <div class="mode-title">Reader Mode</div>
+        <div class="mode-description">
+          Read articles with AI-powered assistance. Get instant explanations, summaries, and definitions.
+        </div>
+        <ul class="mode-features">
+          <li>ELI5 explanations</li>
+          <li>Quick summaries</li>
+          <li>Term definitions</li>
+          <li>Real-world examples</li>
+          <li>Helpful tips</li>
+        </ul>
+        <button class="mode-button">Start Reading</button>
+      </a>
+
+      <a href="/editor.html" class="mode-card">
+        <div class="mode-icon">✍️</div>
+        <div class="mode-title">Writer Mode</div>
+        <div class="mode-description">
+          Write with a rich text editor and get AI assistance as you type. Format, edit, and improve your content.
+        </div>
+        <ul class="mode-features">
+          <li>Rich text formatting</li>
+          <li>Writing assistance</li>
+          <li>Grammar checking</li>
+          <li>Document summarization</li>
+          <li>Real-time help</li>
+        </ul>
+        <button class="mode-button">Start Writing</button>
+      </a>
+    </div>
+
+    <div class="footer">
+      <p>✨ Select any text to get instant AI assistance</p>
+      <p>🤖 Powered by OpenAI GPT-4o-mini</p>
+      <p style="opacity: 0.7; font-size: 12px; margin-top: 15px;">Clippy Reborn v2.0</p>
+    </div>
+  </div>
+</body>
+</html>

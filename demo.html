@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clippy Reader AI - Demo</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    h1 {
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .instructions {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      border-left: 4px solid #667eea;
+    }
+
+    .instructions h2 {
+      margin-top: 0;
+      color: #667eea;
+    }
+
+    .article {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .article h2 {
+      color: #2c3e50;
+      margin-top: 30px;
+    }
+
+    .article p {
+      margin: 15px 0;
+    }
+
+    .highlight-demo {
+      background: #fff3cd;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body>
+  <h1>📎 Clippy Reader AI Demo</h1>
+  <p class="subtitle">Your friendly AI reading assistant</p>
+
+  <div class="instructions">
+    <h2>How to Use</h2>
+    <ol>
+      <li><strong>Select any text</strong> in the article below</li>
+      <li><strong>Choose an option</strong> from the menu that appears:
+        <ul>
+          <li>📚 <strong>ELI5</strong> - Explain like you're 5</li>
+          <li>📝 <strong>Summarize</strong> - Get key points</li>
+          <li>📖 <strong>Define</strong> - Define terms</li>
+          <li>🌟 <strong>Example</strong> - Get real-world examples</li>
+          <li>💡 <strong>Explain</strong> - Plain language explanation</li>
+        </ul>
+      </li>
+      <li><strong>View the response</strong> in the Clippy widget (bottom right)</li>
+    </ol>
+    <p><strong>Note:</strong> Make sure the backend server is running on <code>http://localhost:3000</code></p>
+  </div>
+
+  <div class="article">
+    <h2>Understanding Quantum Computing</h2>
+    
+    <p>
+      Quantum computing represents a paradigm shift in computational technology, leveraging the principles of quantum mechanics to process information in fundamentally different ways than classical computers. Unlike traditional bits that exist in states of either 0 or 1, quantum bits or "qubits" can exist in superposition, simultaneously representing multiple states.
+    </p>
+
+    <p>
+      The phenomenon of quantum entanglement allows qubits to be correlated with each other in ways that have no classical analog. When qubits become entangled, the state of one qubit instantaneously influences the state of another, regardless of the distance separating them. This property enables quantum computers to perform certain calculations exponentially faster than their classical counterparts.
+    </p>
+
+    <h2>Applications and Implications</h2>
+
+    <p>
+      Quantum computers excel at solving optimization problems, simulating molecular interactions for drug discovery, and breaking certain types of encryption. The cryptographic implications are particularly significant, as quantum algorithms like Shor's algorithm could theoretically factor large numbers efficiently, potentially compromising current public-key cryptography systems.
+    </p>
+
+    <p>
+      However, quantum computing faces substantial challenges. Qubits are extremely fragile and susceptible to decoherence, where environmental interference causes them to lose their quantum properties. Maintaining quantum coherence requires operating at temperatures near absolute zero and implementing sophisticated error correction protocols.
+    </p>
+
+    <h2>The Future of Computing</h2>
+
+    <p>
+      As quantum technology matures, we anticipate a hybrid computing paradigm where quantum processors handle specific tasks while classical computers manage others. This synergy could revolutionize fields ranging from artificial intelligence and machine learning to materials science and financial modeling.
+    </p>
+
+    <p>
+      The race to achieve "quantum supremacy" - the point where quantum computers can solve problems impossible for classical computers - has intensified among tech giants and research institutions worldwide. While significant hurdles remain, the potential impact of quantum computing on society, economy, and scientific discovery is profound and far-reaching.
+    </p>
+  </div>
+
+  <!-- Load all Clippy components -->
+  <script src="src/frontend/api-client.js"></script>
+  <script src="src/frontend/clippy-widget.js"></script>
+  <script src="src/frontend/highlight-detector.js"></script>
+  <script src="src/frontend/interaction-menu.js"></script>
+  <script src="src/frontend/clippy-app.js"></script>
+
+  <!-- Initialize Clippy -->
+  <script>
+    // Initialize Clippy when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      const clippy = new ClippyApp({
+        apiBaseUrl: 'http://localhost:3000/api',
+        position: 'bottom-right',
+        theme: 'light'
+      });
+
+      // Make it globally accessible for debugging
+      window.clippy = clippy;
+    });
+  </script>
+</body>
+</html>

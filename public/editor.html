@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clippy Writer - AI-Powered Writing Assistant</title>
+  
+  <!-- Quill.js Rich Text Editor -->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      background-attachment: fixed;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background: rgba(26, 26, 46, 0.8);
+      border-bottom: 2px solid rgba(102, 126, 234, 0.4);
+      color: white;
+      padding: 20px 40px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #667eea;
+      text-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+    }
+
+    .header p {
+      font-size: 14px;
+      opacity: 0.9;
+      color: #b0b0b0;
+    }
+
+    .header a {
+      color: #8b9aff;
+      text-decoration: none;
+      margin-left: 20px;
+      transition: color 0.2s;
+    }
+
+    .header a:hover {
+      color: #a8b5ff;
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+      gap: 30px;
+      overflow: hidden;
+    }
+
+    .editor-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: rgba(40, 40, 60, 0.9);
+      border: 2px solid rgba(102, 126, 234, 0.3);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .editor-header {
+      padding: 15px 20px;
+      background: rgba(30, 30, 50, 0.8);
+      border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .editor-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #667eea;
+      text-shadow: 0 0 10px rgba(102, 126, 234, 0.4);
+    }
+
+    .word-count {
+      font-size: 13px;
+      color: #b0b0b0;
+    }
+
+    #editor-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ql-toolbar {
+      border: none !important;
+      border-bottom: 2px solid rgba(102, 126, 234, 0.3) !important;
+      background: rgba(30, 30, 50, 0.8) !important;
+    }
+
+    .ql-toolbar .ql-stroke {
+      stroke: #b0b0b0 !important;
+    }
+
+    .ql-toolbar .ql-fill {
+      fill: #b0b0b0 !important;
+    }
+
+    .ql-toolbar .ql-picker-label {
+      color: #b0b0b0 !important;
+    }
+
+    .ql-toolbar button:hover .ql-stroke,
+    .ql-toolbar button.ql-active .ql-stroke {
+      stroke: #667eea !important;
+    }
+
+    .ql-toolbar button:hover .ql-fill,
+    .ql-toolbar button.ql-active .ql-fill {
+      fill: #667eea !important;
+    }
+
+    .ql-container {
+      flex: 1;
+      border: none !important;
+      font-size: 16px;
+      line-height: 1.8;
+      background: rgba(40, 40, 60, 0.9) !important;
+    }
+
+    .ql-editor {
+      padding: 30px 40px;
+      min-height: 400px;
+      color: #e0e0e0 !important;
+    }
+
+    .ql-editor.ql-blank::before {
+      color: #808080 !important;
+    }
+
+    .ql-editor:focus {
+      outline: none;
+    }
+
+    .sidebar {
+      width: 350px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .info-card {
+      background: rgba(40, 40, 60, 0.9);
+      border: 2px solid rgba(102, 126, 234, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .info-card h3 {
+      font-size: 16px;
+      color: #667eea;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-shadow: 0 0 10px rgba(102, 126, 234, 0.4);
+    }
+
+    .info-card p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #c0c0c0;
+      margin-bottom: 10px;
+    }
+
+    .info-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .info-card li {
+      font-size: 13px;
+      color: #d0d0d0;
+      padding: 6px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .info-card li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #667eea;
+      font-weight: bold;
+    }
+
+    .info-card strong {
+      color: #e8e8e8;
+    }
+
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #4ade80;
+      background: rgba(74, 222, 128, 0.2);
+      border: 1px solid rgba(74, 222, 128, 0.4);
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+      box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .quick-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .action-btn {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .action-btn:hover {
+      background: #5568d3;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    .action-btn:active {
+      transform: translateY(0);
+    }
+
+    .action-btn.secondary {
+      background: rgba(108, 117, 125, 0.8);
+      border: 1px solid rgba(108, 117, 125, 0.5);
+    }
+
+    .action-btn.secondary:hover {
+      background: rgba(90, 98, 104, 0.9);
+    }
+
+    @media (max-width: 1024px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📎 Clippy Writer</h1>
+    <p>AI-Powered Writing Assistant - Write, format, and get instant help with your content</p>
+  </div>
+
+  <div class="container">
+    <div class="editor-section">
+      <div class="editor-header">
+        <div class="editor-title">Your Document</div>
+        <div class="word-count">
+          <span id="word-count">0</span> words · 
+          <span id="char-count">0</span> characters
+        </div>
+      </div>
+      <div id="editor-container"></div>
+    </div>
+
+    <div class="sidebar">
+      <div class="info-card">
+        <h3>🎯 How to Use</h3>
+        <p><strong>Start writing</strong> in the editor, then:</p>
+        <ul>
+          <li>Select any text to get AI help</li>
+          <li>Use the toolbar for formatting</li>
+          <li>Clippy will assist you automatically</li>
+          <li>Tips will appear as you write</li>
+        </ul>
+        <p style="margin-top: 15px;">
+          <span class="status-indicator">
+            <span class="status-dot"></span>
+            Clippy is ready
+          </span>
+        </p>
+      </div>
+
+      <div class="info-card">
+        <h3>✨ Quick Actions</h3>
+        <div class="quick-actions">
+          <button class="action-btn" onclick="summarizeAll()">
+            📝 Summarize Document
+          </button>
+          <button class="action-btn" onclick="improveWriting()">
+            ✍️ Improve Writing
+          </button>
+          <button class="action-btn" onclick="checkGrammar()">
+            ✓ Check Grammar
+          </button>
+          <button class="action-btn secondary" onclick="clearEditor()">
+            🗑️ Clear Document
+          </button>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>⌨️ Keyboard Shortcuts</h3>
+        <ul>
+          <li><strong>Ctrl+B</strong> - Bold</li>
+          <li><strong>Ctrl+I</strong> - Italic</li>
+          <li><strong>Ctrl+U</strong> - Underline</li>
+          <li><strong>Ctrl+Shift+L</strong> - Bullet List</li>
+          <li><strong>Ctrl+Shift+O</strong> - Numbered List</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3>📚 Features</h3>
+        <ul>
+          <li>Rich text formatting</li>
+          <li>Headings & styles</li>
+          <li>Lists & quotes</li>
+          <li>Links & images</li>
+          <li>Code blocks</li>
+          <li>Real-time word count</li>
+          <li>AI assistance on selection</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load all Clippy components -->
+  <script src="/js/api-client.js"></script>
+  <script src="/js/clippy-widget.js"></script>
+  <script src="/js/highlight-detector.js"></script>
+  <script src="/js/interaction-menu.js"></script>
+  <script src="/js/clippy-tips.js"></script>
+  <script src="/js/clippy-app.js"></script>
+
+  <script>
+    // Initialize Quill editor
+    const quill = new Quill('#editor-container', {
+      theme: 'snow',
+      placeholder: 'Start writing your document here...\n\nYou can format text, add headings, create lists, and more. Select any text to get AI assistance!',
+      modules: {
+        toolbar: [
+          [{ 'header': [1, 2, 3, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ 'color': [] }, { 'background': [] }],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          [{ 'indent': '-1'}, { 'indent': '+1' }],
+          [{ 'align': [] }],
+          ['blockquote', 'code-block'],
+          ['link', 'image'],
+          ['clean']
+        ]
+      }
+    });
+
+    // Update word count
+    function updateWordCount() {
+      const text = quill.getText().trim();
+      const words = text.length > 0 ? text.split(/\s+/).length : 0;
+      const chars = text.length;
+      
+      document.getElementById('word-count').textContent = words;
+      document.getElementById('char-count').textContent = chars;
+    }
+
+    quill.on('text-change', updateWordCount);
+
+    // Initialize Clippy
+    let clippy;
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('🚀 Initializing Clippy Writer...');
+      
+      clippy = new ClippyApp({
+        apiBaseUrl: 'http://localhost:3000/api',
+        position: 'bottom-right',
+        theme: 'light'
+      });
+
+      console.log('✅ Clippy Writer is ready!');
+      window.clippy = clippy;
+    });
+
+    // Quick action functions
+    async function summarizeAll() {
+      const text = quill.getText().trim();
+      if (!text || text.length < 50) {
+        alert('Please write at least a few sentences before summarizing.');
+        return;
+      }
+
+      try {
+        clippy.widget.showLoading();
+        const response = await clippy.apiClient.summarize(text);
+        clippy.widget.displayResponse(response.data, 'summarize');
+      } catch (error) {
+        clippy.widget.displayError(error.message);
+      }
+    }
+
+    async function improveWriting() {
+      const text = quill.getText().trim();
+      if (!text) {
+        alert('Please write something first!');
+        return;
+      }
+
+      try {
+        clippy.widget.showLoading();
+        const response = await clippy.apiClient.explain(text);
+        clippy.widget.displayResponse({
+          content: 'Here are some suggestions to improve your writing:\n\n' + response.data.content
+        }, 'explain');
+      } catch (error) {
+        clippy.widget.displayError(error.message);
+      }
+    }
+
+    async function checkGrammar() {
+      const text = quill.getText().trim();
+      if (!text) {
+        alert('Please write something first!');
+        return;
+      }
+
+      try {
+        clippy.widget.showLoading();
+        const response = await clippy.apiClient.explain(text);
+        clippy.widget.displayResponse({
+          content: 'Grammar and clarity check:\n\n' + response.data.content
+        }, 'explain');
+      } catch (error) {
+        clippy.widget.displayError(error.message);
+      }
+    }
+
+    function clearEditor() {
+      if (confirm('Are you sure you want to clear the document?')) {
+        quill.setText('');
+        updateWordCount();
+      }
+    }
+
+    // Add some sample text for demo
+    setTimeout(() => {
+      if (quill.getText().trim().length === 0) {
+        quill.setText('Welcome to Clippy Writer!\n\nThis is a rich text editor where you can write and format your content. Try selecting this text to see Clippy in action!\n\nYou can make text bold, italic, add headings, create lists, and much more. Clippy will help you understand complex topics, simplify your writing, and provide examples.\n\nStart writing your own content now!');
+        updateWordCount();
+      }
+    }, 1000);
+  </script>
+</body>
+</html>

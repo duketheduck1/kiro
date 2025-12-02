@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clippy Bookmarklet - Use Anywhere!</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #e0e0e0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: #667eea;
+      text-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+      font-size: 42px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #b0b0b0;
+      font-size: 20px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: rgba(26, 26, 46, 0.8);
+      border: 2px solid rgba(102, 126, 234, 0.4);
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .card h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(102, 126, 234, 0.4);
+    }
+
+    .card p {
+      color: #d0d0d0;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .bookmarklet-box {
+      background: rgba(102, 126, 234, 0.15);
+      border: 2px dashed #667eea;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .bookmarklet-link {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px 40px;
+      border-radius: 12px;
+      font-size: 20px;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      transition: all 0.3s;
+      cursor: move;
+    }
+
+    .bookmarklet-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+
+    .instructions {
+      background: rgba(102, 126, 234, 0.1);
+      border-left: 4px solid #667eea;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .instructions ol {
+      margin: 15px 0;
+      padding-left: 25px;
+    }
+
+    .instructions li {
+      margin: 10px 0;
+      color: #c0c0c0;
+      line-height: 1.6;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-list li {
+      padding: 12px 0;
+      padding-left: 30px;
+      position: relative;
+      color: #d0d0d0;
+    }
+
+    .feature-list li::before {
+      content: '✨';
+      position: absolute;
+      left: 0;
+      font-size: 18px;
+    }
+
+    .warning {
+      background: rgba(255, 193, 7, 0.15);
+      border: 2px solid rgba(255, 193, 7, 0.4);
+      border-radius: 8px;
+      padding: 15px;
+      margin: 20px 0;
+      color: #ffd54f;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #8b9aff;
+      text-decoration: none;
+      margin-top: 20px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: #a8b5ff;
+    }
+
+    code {
+      background: rgba(102, 126, 234, 0.2);
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #8b9aff;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📎 Clippy Bookmarklet</h1>
+    <p class="subtitle">Use Clippy on ANY website - just one click away!</p>
+
+    <div class="card">
+      <h2>🚀 Quick Setup</h2>
+      <p>Drag this button to your bookmarks bar to use Clippy anywhere on the web:</p>
+      
+      <div class="bookmarklet-box">
+        <p style="margin-bottom: 20px; color: #b0b0b0;">👇 Drag this to your bookmarks bar 👇</p>
+        <a href="javascript:(function(){if(window.clippyLoaded){alert('Clippy is already loaded!');return;}window.clippyLoaded=true;const s=document.createElement('script');s.src='http://localhost:3000/js/clippy-bookmarklet.js';document.body.appendChild(s);})();" class="bookmarklet-link">
+          📎 Activate Clippy
+        </a>
+        <p style="margin-top: 20px; color: #b0b0b0; font-size: 14px;">
+          Or right-click and "Add to Bookmarks"
+        </p>
+      </div>
+
+      <div class="instructions">
+        <h3 style="color: #667eea; margin-bottom: 15px;">📋 How to Install:</h3>
+        <ol>
+          <li><strong>Show your bookmarks bar</strong> (Press <code>Ctrl+Shift+B</code> in most browsers)</li>
+          <li><strong>Drag the button above</strong> to your bookmarks bar</li>
+          <li><strong>Visit any website</strong> you want to use Clippy on</li>
+          <li><strong>Click the bookmark</strong> to activate Clippy</li>
+          <li><strong>Select text</strong> and get instant AI help!</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>✨ Features</h2>
+      <ul class="feature-list">
+        <li>Works on ANY website (Wikipedia, news sites, blogs, etc.)</li>
+        <li>Select text to get instant explanations</li>
+        <li>ELI5, summaries, definitions, and examples</li>
+        <li>Beautiful purple widget in the corner</li>
+        <li>No installation required - just a bookmark!</li>
+        <li>Privacy-friendly - only sends selected text</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>🎯 How to Use</h2>
+      <p>Once you've added the bookmarklet:</p>
+      <div class="instructions">
+        <ol>
+          <li>Go to any website (try Wikipedia, Medium, or any article)</li>
+          <li>Click your "Activate Clippy" bookmark</li>
+          <li>You'll see a purple bubble appear in the bottom-right corner</li>
+          <li>Select any text on the page</li>
+          <li>Choose an action from the popup menu</li>
+          <li>Get instant AI-powered help!</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>⚠️ Important Notes</h2>
+      <div class="warning">
+        <p><strong>Server Required:</strong> Make sure your Clippy server is running at <code>http://localhost:3000</code></p>
+        <p style="margin-top: 10px;"><strong>CORS:</strong> Some websites may block external scripts for security. This works best on most content sites.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔧 Troubleshooting</h2>
+      <p><strong>Bookmarklet not working?</strong></p>
+      <ul class="feature-list">
+        <li>Make sure the server is running (<code>npm start</code>)</li>
+        <li>Check the browser console for errors (F12)</li>
+        <li>Some sites block external scripts (banks, secure sites)</li>
+        <li>Try refreshing the page and clicking the bookmark again</li>
+        <li>If Clippy is already loaded, refresh the page first</li>
+      </ul>
+    </div>
+
+    <a href="/reborn.html" class="back-link">← Back to Home</a>
+  </div>
+</body>
+</html>

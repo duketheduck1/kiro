@@ -1,0 +1,47 @@
+<!-- Navigation Bar Component -->
+<style>
+  .nav-bar {
+    background: white;
+    border-bottom: 2px solid #e9ecef;
+    padding: 12px 40px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .nav-link {
+    color: #666;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .nav-link:hover {
+    background: #f8f9fa;
+    color: #667eea;
+  }
+
+  .nav-link.active {
+    background: #667eea;
+    color: white;
+  }
+</style>
+
+<div class="nav-bar">
+  <a href="/" class="nav-link" id="nav-reader">📖 Reader Mode</a>
+  <a href="/editor.html" class="nav-link" id="nav-editor">✍️ Writer Mode</a>
+</div>
+
+<script>
+  // Highlight active page
+  const path = window.location.pathname;
+  if (path === '/' || path === '/index.html') {
+    document.getElementById('nav-reader').classList.add('active');
+  } else if (path === '/editor.html') {
+    document.getElementById('nav-editor').classList.add('active');
+  }
+</script>

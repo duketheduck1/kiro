@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Testing News Feed</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 { color: #667eea; }
+    .link-box {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+    a {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 8px;
+      margin: 10px;
+      font-size: 16px;
+    }
+    a:hover {
+      background: #5568d3;
+    }
+  </style>
+</head>
+<body>
+  <h1>📰 Clippy News Feed Test</h1>
+  <p>Click the links below to access different pages:</p>
+  
+  <div class="link-box">
+    <h3>Direct Links:</h3>
+    <a href="/feed.html">📰 News Feed</a>
+    <a href="/index.html">📖 Reader Mode</a>
+    <a href="/editor.html">✍️ Writer Mode</a>
+    <a href="/">🏠 Home Page</a>
+  </div>
+
+  <div class="link-box">
+    <h3>API Test:</h3>
+    <a href="/api/feed" target="_blank">🔗 Test Feed API</a>
+    <a href="/api/feed/categories" target="_blank">🔗 Test Categories</a>
+  </div>
+
+  <p style="color: #666; margin-top: 30px;">
+    If you can't see the News Feed on the home page, use the direct link above!
+  </p>
+</body>
+</html>

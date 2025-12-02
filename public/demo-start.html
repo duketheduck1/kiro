@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clippy Reborn - Demo Launcher</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: #0a0a0a;
+      color: #00ff00;
+      padding: 40px;
+      min-height: 100vh;
+    }
+
+    .terminal {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #1a1a1a;
+      border: 2px solid #667eea;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 0 40px rgba(102, 126, 234, 0.5);
+    }
+
+    .ascii-art {
+      color: #667eea;
+      text-shadow: 0 0 10px rgba(102, 126, 234, 0.8);
+      margin-bottom: 30px;
+      font-size: 10px;
+      line-height: 1.1;
+    }
+
+    h1 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .info {
+      color: #b0b0b0;
+      margin-bottom: 30px;
+      line-height: 1.8;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .link-item {
+      background: #2a2a2a;
+      border: 2px solid #667eea;
+      border-radius: 8px;
+      padding: 20px;
+      transition: all 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .link-item:hover {
+      background: #3a3a3a;
+      border-color: #8b9aff;
+      transform: translateX(10px);
+      box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .link-title {
+      color: #667eea;
+      font-size: 18px;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .link-desc {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .link-url {
+      color: #555;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .status {
+      color: #4ade80;
+      margin-bottom: 20px;
+    }
+
+    .blink {
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal">
+    <pre class="ascii-art">
+ ██████╗██╗     ██╗██████╗ ██████╗ ██╗   ██╗
+██╔════╝██║     ██║██╔══██╗██╔══██╗╚██╗ ██╔╝
+██║     ██║     ██║██████╔╝██████╔╝ ╚████╔╝ 
+██║     ██║     ██║██╔═══╝ ██╔═══╝   ╚██╔╝  
+╚██████╗███████╗██║██║     ██║        ██║   
+ ╚═════╝╚══════╝╚═╝╚═╝     ╚═╝        ╚═╝   
+                                             
+██████╗ ███████╗██████╗  ██████╗ ██████╗ ███╗   ██╗
+██╔══██╗██╔════╝██╔══██╗██╔═══██╗██╔══██╗████╗  ██║
+██████╔╝█████╗  ██████╔╝██║   ██║██████╔╝██╔██╗ ██║
+██╔══██╗██╔══╝  ██╔══██╗██║   ██║██╔══██╗██║╚██╗██║
+██║  ██║███████╗██████╔╝╚██████╔╝██║  ██║██║ ╚████║
+╚═╝  ╚═╝╚══════╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝
+    </pre>
+
+    <div class="status">
+      ✅ Server Status: <span style="color: #4ade80;">ONLINE</span>
+      <br>
+      📍 Port: 3000
+      <br>
+      🤖 AI Engine: Ready
+      <br>
+      <span class="blink">▶</span> Select a demo below
+    </div>
+
+    <h1>🚀 Demo Launcher</h1>
+
+    <div class="info">
+      Welcome to Clippy Reborn! Choose a demo to explore:
+    </div>
+
+    <div class="links">
+      <a href="/reborn.html" class="link-item">
+        <div class="link-title">🏠 Home Page</div>
+        <div class="link-desc">Main landing page with ASCII logo and mode selection</div>
+        <div class="link-url">→ http://localhost:3000/reborn.html</div>
+      </a>
+
+      <a href="/feed-reborn.html" class="link-item">
+        <div class="link-title">📰 News Feed (Windows-Style Cards)</div>
+        <div class="link-desc">Beautiful grid of news cards with images, summaries, and AI analysis</div>
+        <div class="link-url">→ http://localhost:3000/feed-reborn.html</div>
+      </a>
+
+      <a href="/index.html" class="link-item">
+        <div class="link-title">📖 Reader Mode</div>
+        <div class="link-desc">Read articles with AI assistance - select text for help</div>
+        <div class="link-url">→ http://localhost:3000/index.html</div>
+      </a>
+
+      <a href="/editor.html" class="link-item">
+        <div class="link-title">✍️ Writer Mode</div>
+        <div class="link-desc">Rich text editor with AI writing assistance</div>
+        <div class="link-url">→ http://localhost:3000/editor.html</div>
+      </a>
+    </div>
+
+    <div class="info" style="margin-top: 30px; padding-top: 30px; border-top: 1px solid #333;">
+      💡 <strong>Tips:</strong>
+      <br>• Look for the purple floating bubble in bottom-right corner
+      <br>• Click the bubble to open Clippy chat
+      <br>• Select any text to get AI assistance
+      <br>• Wait 10 seconds for helpful tips to appear
+      <br>• News feed shows live articles with images
+    </div>
+
+    <div class="info" style="margin-top: 20px; color: #667eea;">
+      📎 Clippy Reborn v2.0 - Your AI-Powered Assistant
+    </div>
+  </div>
+</body>
+</html>
