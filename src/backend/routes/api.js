@@ -282,4 +282,20 @@ router.get('/feed/article/:id', async (req, res, next) => {
   }
 });
 
+/**
+ * GET /api/debug/env
+ * Debug endpoint to check environment variables (remove in production!)
+ */
+router.get('/debug/env', async (req, res) => {
+  res.json({
+    success: true,
+    data: {
+      hasOpenAIKey: !!process.env.OPENAI_API_KEY,
+      keyPrefix: process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.substring(0, 7) + '...' : 'NOT SET',
+      nodeEnv: process.env.NODE_ENV,
+      isVercel: process.env.VERCEL === '1'
+    }
+  });
+});
+
 export default router;
