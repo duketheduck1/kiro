@@ -304,8 +304,11 @@
 
     // Initialize Clippy
     document.addEventListener('DOMContentLoaded', () => {
+      const apiBaseUrl = window.location.hostname === 'localhost'
+        ? 'http://localhost:3000/api'
+        : '/api';
       clippy = new ClippyApp({
-        apiBaseUrl: 'http://localhost:3000/api',
+        apiBaseUrl: apiBaseUrl,
         position: 'bottom-right',
         theme: 'light'
       });
@@ -319,7 +322,10 @@
 
     async function loadArticles() {
       try {
-        const response = await fetch('http://localhost:3000/api/feed');
+        const apiUrl = window.location.hostname === 'localhost' 
+          ? 'http://localhost:3000/api/feed'
+          : '/api/feed';
+        const response = await fetch(apiUrl);
         const data = await response.json();
         
         if (data.success) {
@@ -426,7 +432,10 @@
         }
 
         try {
-          const response = await fetch(`http://localhost:3000/api/feed/search?q=${encodeURIComponent(query)}`);
+          const apiUrl = window.location.hostname === 'localhost'
+            ? `http://localhost:3000/api/feed/search?q=${encodeURIComponent(query)}`
+            : `/api/feed/search?q=${encodeURIComponent(query)}`;
+          const response = await fetch(apiUrl);
           const data = await response.json();
           
           if (data.success) {

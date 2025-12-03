@@ -228,8 +228,11 @@
     document.addEventListener('DOMContentLoaded', () => {
       console.log('🚀 Initializing Clippy Reader AI...');
       
+      const apiBaseUrl = window.location.hostname === 'localhost'
+        ? 'http://localhost:3000/api'
+        : '/api';
       const clippy = new ClippyApp({
-        apiBaseUrl: 'http://localhost:3000/api',
+        apiBaseUrl: apiBaseUrl,
         position: 'bottom-right',
         theme: 'light'
       });
