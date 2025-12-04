@@ -1,95 +1,150 @@
 # 📎 Clippy Reborn
 
-**Your AI-Powered Reading & Writing Assistant**
+A modern reading and writing assistant that helps you understand articles, write better content, and stay informed with curated news feeds.
 
-Clippy Reborn is a modern, intelligent assistant that helps you read, write, and understand content with AI-powered explanations, summaries, and real-time assistance.
+## What is this?
+
+Clippy Reborn is a web app I built to make reading and writing easier. Select any text on the page and get instant help - whether you need a simple explanation, a quick summary, or examples to understand complex topics.
 
 ## Features
 
-- **ELI5 Mode**: Simplify complex text to child-friendly language
-- **Smart Summaries**: Get key points and TL;DR for any article
-- **Instant Definitions**: Understand unfamiliar terms without leaving the page
-- **Reading Companion**: Contextual help and guidance while reading
-- **Feed Intelligence**: AI-powered article categorization and prioritization
+### 📖 Reader Mode
+Read articles with instant assistance. Just highlight any text and choose what you need:
+- **ELI5** - Get simple explanations anyone can understand
+- **Summarize** - Quick summaries of long paragraphs
+- **Define** - Clear definitions of technical terms
+- **Example** - Real-world examples to make concepts click
+- **Explain** - Plain language explanations
 
-## Setup
+### ✍️ Writer Mode
+Rich text editor with helpful features:
+- Format your text (bold, italic, headings, lists)
+- Get writing suggestions
+- Check grammar and clarity
+- Summarize your document
+- Real-time word count
 
-1. Install dependencies:
+### 📰 News Feed
+Stay updated with curated news from top sources:
+- TechCrunch, BBC News, The Verge, and more
+- Beautiful card layout with images
+- Search and filter by category
+- Clean, distraction-free reading
+
+### 🔖 Bookmarklet
+Use Clippy on ANY website! Drag the bookmarklet to your bookmarks bar and activate it on Wikipedia, Medium, or any article site.
+
+## Tech Stack
+
+- **Frontend**: Vanilla JavaScript, HTML5, CSS3
+- **Backend**: Node.js, Express
+- **RSS Parsing**: rss-parser
+- **Rich Text Editor**: Quill.js
+- **Deployment**: Vercel
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+
+- OpenAI API key
+
+### Installation
+
+1. Clone the repo:
+```bash
+git clone https://github.com/yourusername/clippy-reborn.git
+cd clippy-reborn
+```
+
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-2. Create `.env` file from example:
-```bash
-copy .env.example .env
+3. Create a `.env` file:
+```env
+OPENAI_API_KEY=your_api_key_here
+PORT=3000
+NODE_ENV=development
 ```
 
-3. Add your OpenAI API key to `.env`:
-```
-OPENAI_API_KEY=your_key_here
-```
-
-4. Start the backend server:
+4. Start the server:
 ```bash
 npm start
 ```
 
-5. Open `demo.html` in your browser to test Clippy!
-
-## Quick Start
-
-**Windows:**
-```bash
-start.bat
-```
-
-Then open `demo.html` in your browser.
+5. Open http://localhost:3000
 
 ## Project Structure
 
 ```
-src/
-├── backend/       # Express API server
-├── frontend/      # Clippy widget and UI
-└── shared/        # Shared types and utilities
+clippy-reborn/
+├── public/              # Frontend HTML pages
+│   ├── reborn.html     # Home page
+│   ├── index.html      # Reader mode
+│   ├── editor.html     # Writer mode
+│   ├── feed-reborn.html # News feed
+│   └── bookmarklet.html # Bookmarklet setup
+├── src/
+│   ├── frontend/       # Client-side JavaScript
+│   │   ├── clippy-app.js
+│   │   ├── clippy-widget.js
+│   │   └── api-client.js
+│   └── backend/        # Server-side code
+│       ├── server.js
+│       ├── routes/
+│       └── services/
+└── api/                # Vercel serverless functions
 ```
 
-## Testing
+## Deployment
 
-Run tests:
-```bash
-npm test
-```
+### Deploy to Vercel
 
-Run tests in watch mode:
-```bash
-npm run test:watch
-```
+1. Push your code to GitHub
 
-## API Endpoints
+2. Import your repo on [Vercel](https://vercel.com)
 
-- `POST /api/eli5` - Simplify text to child-friendly language
-- `POST /api/summarize` - Generate summaries and key points
-- `POST /api/define` - Get definitions for terms
-- `POST /api/explain` - Get plain-language explanations
-- `POST /api/example` - Get real-world examples and analogies
-- `POST /api/article/analyze` - Analyze articles for feed intelligence
+3. Add environment variable:
+   - `OPENAI_API_KEY` = your OpenAI API key
 
-## Documentation
+4. Deploy!
 
-- 📖 [Quick Start Guide](QUICKSTART.md) - Get running in 3 minutes
-- 📚 [Usage Guide](USAGE.md) - Detailed usage and API documentation
-- 🏗️ [Build Summary](BUILD_SUMMARY.md) - What's been built and what works
+## Usage
 
-## What's Included
+### Reader Mode
+1. Visit the reader mode page
+2. Select any text in the article
+3. Choose an action from the popup menu
+4. See the result in the purple widget
 
-✅ **Backend API** - All 6 endpoints fully functional
-✅ **Frontend Widget** - Complete with text selection and interactions
-✅ **AI Integration** - OpenAI GPT-4o-mini/GPT-4o with retry logic
-✅ **Error Handling** - Comprehensive error handling and user feedback
-✅ **Demo Page** - Working example with sample article
-✅ **Tests** - Unit tests for core functionality (all passing)
+### Writer Mode
+1. Open the writer mode
+2. Start typing your content
+3. Use the toolbar to format text
+4. Select text for instant help
+5. Use quick actions to improve your writing
 
-## Status
+### News Feed
+1. Browse the latest articles
+2. Click on any card to read more
+3. Use the search bar to find specific topics
+4. Filter by category
 
-🎉 **Production Ready** - Core features complete and functional!
+## Contributing
+
+Feel free to open issues or submit pull requests. This is a personal project, but I'm happy to review contributions!
+
+## License
+
+MIT License - feel free to use this however you want.
+
+## Acknowledgments
+
+- Inspired by the classic Microsoft Clippy
+- Built with modern web technologies
+- Powered by OpenAI's GPT models
+
+---
+
+Made with 💜 by [Your Name]
