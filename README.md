@@ -146,5 +146,3 @@ MIT License - feel free to use this however you want.
 - Powered by OpenAI's GPT models
 
 ---
-
-Made with 💜 by [Your Name]
